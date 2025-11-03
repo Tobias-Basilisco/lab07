@@ -62,10 +62,14 @@ public class IterableWithPolicyImpl <T> implements IterableWithPolicy<T>{
 
         @Override
         public T next() {
-            if(predicate.test(elements[currentIndex])){
-                return null;
+            if (hasNext()){
+                if(!predicate.test(elements[currentIndex])){
+                    currentIndex++;
+                    return next();
+                }
+                return elements[currentIndex++];
             }
-            return elements[currentIndex];
+            return null;
         }
     }
 
