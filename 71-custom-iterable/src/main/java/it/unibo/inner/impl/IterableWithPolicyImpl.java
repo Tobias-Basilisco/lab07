@@ -3,6 +3,7 @@ package it.unibo.inner.impl;
 import java.lang.annotation.Inherited;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import it.unibo.inner.api.IterableWithPolicy;
 import it.unibo.inner.api.Predicate;
@@ -70,6 +71,7 @@ public class IterableWithPolicyImpl <T> implements IterableWithPolicy<T>{
                 return elements[currentIndex++];
             }
             return null;
+            // throw new NoSuchElementException();
         }
     }
 
