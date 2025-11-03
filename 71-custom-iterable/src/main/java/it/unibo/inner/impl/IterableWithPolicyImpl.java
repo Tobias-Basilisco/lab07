@@ -10,7 +10,7 @@ import it.unibo.inner.impl.PredicateImpl;
 
 public class IterableWithPolicyImpl <T> implements IterableWithPolicy<T>{
     private final T[] elements;
-    private final Predicate<T> predicate;
+    private Predicate<T> predicate;
 
     public IterableWithPolicyImpl (final T[] elements){
         this(
@@ -31,7 +31,7 @@ public class IterableWithPolicyImpl <T> implements IterableWithPolicy<T>{
     }
 
     public Iterator<T> iterator(){
-        return new IteratorWithOptPolicy();
+        return new IteratorWithOptPolicy(predicate);
     }
 
     /**
@@ -40,18 +40,18 @@ public class IterableWithPolicyImpl <T> implements IterableWithPolicy<T>{
      */
     @Override
     public void setIterationPolicy(Predicate<T> filter){
-
+        predicate = filter;
     }
 
     class IteratorWithOptPolicy implements Iterator<T>{
         private int currentIndex;
-        private final PredicateImpl<T> predicate;
+        private final Predicate<T> predicate;
 
         public IteratorWithOptPolicy(){
             this.predicate = new PredicateImpl<>();
         }
 
-        public IteratorWithOptPolicy(final PredicateImpl<T> predicate){
+        public IteratorWithOptPolicy(final Predicate<T> predicate){
             this.predicate = predicate;
         }
 
@@ -62,6 +62,9 @@ public class IterableWithPolicyImpl <T> implements IterableWithPolicy<T>{
 
         @Override
         public T next() {
+            if(predicate.test(elements[currentIndex])){
+                return null;
+            }
             return elements[currentIndex];
         }
     }
