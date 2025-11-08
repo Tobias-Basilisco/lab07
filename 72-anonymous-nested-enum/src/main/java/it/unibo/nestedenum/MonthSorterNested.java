@@ -24,8 +24,8 @@ public final class MonthSorterNested implements MonthSorter {
         
         @Override
         public int compare(final String s1, final String s2) {
-            final Month m1 = Month.JANUARY.fromString(s1);
-            final Month m2 = Month.JANUARY.fromString(s2);
+            final Month m1 = Month.fromString(s1);
+            final Month m2 = Month.fromString(s2);
             return Integer.compare(m1.getDays(), m2.getDays());
         }
     }
@@ -34,8 +34,8 @@ public final class MonthSorterNested implements MonthSorter {
 
         @Override
         public int compare(final String s1, final String s2) {
-            final Month m1 = Month.JANUARY.fromString(s1);
-            final Month m2 = Month.JANUARY.fromString(s2);
+            final Month m1 = Month.fromString(s1);
+            final Month m2 = Month.fromString(s2);
             return Integer.compare(m1.ordinal(), m2.ordinal());
         }
     }
@@ -70,7 +70,7 @@ public final class MonthSorterNested implements MonthSorter {
             return days;
         }
 
-        Month fromString(String namePiece){
+        static Month fromString(String namePiece){
             if (namePiece == null || namePiece.isEmpty()) {
                 throw new IllegalArgumentException("Month name cannot be null or empty.");
             }
