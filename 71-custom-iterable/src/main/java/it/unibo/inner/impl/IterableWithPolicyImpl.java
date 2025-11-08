@@ -37,7 +37,7 @@ public class IterableWithPolicyImpl <T> implements IterableWithPolicy<T>{
 
     /**
      * 
-     {@inherit}
+     {@inheritDoc}
      */
     @Override
     public void setIterationPolicy(Predicate<T> filter){
@@ -58,20 +58,22 @@ public class IterableWithPolicyImpl <T> implements IterableWithPolicy<T>{
 
         @Override
         public boolean hasNext() {
-            return currentIndex < elements.length;
+            int i = currentIndex;
+            while (i < elements.length && !predicate.test(elements[i])) {
+                i++;
+            }
+            return i < elements.length;
         }
 
         @Override
         public T next() {
-            if (hasNext()){
-                if(!predicate.test(elements[currentIndex])){
-                    currentIndex++;
-                    return next();
-                }
-                return elements[currentIndex++];
+            while (currentIndex < elements.length && !predicate.test(elements[currentIndex])){
+                currentIndex++;
             }
-            return null;
-            // throw new NoSuchElementException();
+            if (currentIndex >= elements.length){
+                throw new NoSuchElementException();
+            }
+            return elements[currentIndex++];
         }
     }
 
