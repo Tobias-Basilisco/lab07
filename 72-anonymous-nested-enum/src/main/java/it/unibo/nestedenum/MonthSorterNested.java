@@ -17,8 +17,17 @@ public final class MonthSorterNested implements MonthSorter {
 
     @Override
     public Comparator<String> sortByOrder() {
-        return null;
+        return new ByOrderComparator();
     }
+
+    private static final class ByOrderComparator implements Comparator<String> {
+    @Override
+    public int compare(final String s1, final String s2) {
+        final Month m1 = Month.JANUARY.fromString(s1);
+        final Month m2 = Month.JANUARY.fromString(s2);
+        return Integer.compare(m1.ordinal(), m2.ordinal());
+    }
+}
 
     public enum Month{
         JANUARY("january", 31),
