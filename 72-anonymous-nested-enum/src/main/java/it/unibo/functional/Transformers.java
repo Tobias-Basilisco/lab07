@@ -98,7 +98,7 @@ public final class Transformers {
                 if (test.call(input)){
                     return List.of(input);
                 }
-                return null;
+                return List.of();
             }
         });
     }
