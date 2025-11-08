@@ -51,13 +51,27 @@ public final class MonthSorterNested implements MonthSorter {
         }
 
         Month fromString(String namePiece){
+            if (namePiece == null || namePiece.isEmpty()) {
+                throw new IllegalArgumentException("Month name cannot be null or empty.");
+            }
+
+            final String lowerPiece = namePiece.toLowerCase();
+            Month found = null; 
+            
             for(final Month month : Month.values()){
-                if (month.equals(namePiece)){
-                    return month;
+                if (month.actualName.startsWith(lowerPiece)){
+                    if (found != null){
+                        throw new IllegalArgumentException("Ambiguous month string input: " + namePiece);
+                    }
+                    found = month;
                 }
             }
 
-            return null;
+            if (found == null) {
+                throw new IllegalArgumentException("No month found for: " + namePiece);
+            }
+
+            return found;
         }
 
         boolean equals(final String month){
