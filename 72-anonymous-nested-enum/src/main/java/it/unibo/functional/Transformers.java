@@ -92,7 +92,15 @@ public final class Transformers {
      * @return A list containing only the elements that passed the test
      */
     public static <I> List<I> select(final Iterable<I> base, final Function<I, Boolean> test) {
-        return null;
+        return flattenTransform(base, new Function<>(){
+            @Override
+            public List<I> call(final I input){
+                if (test.call(input)){
+                    return List.of(input);
+                }
+                return null;
+            }
+        });
     }
 
     /**
