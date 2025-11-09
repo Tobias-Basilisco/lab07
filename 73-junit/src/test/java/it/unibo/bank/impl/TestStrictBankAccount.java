@@ -40,7 +40,9 @@ class TestStrictBankAccount {
      */
     @Test
     public void testManagementFees() {
-        fail("To be implemented");
+        bankAccount.deposit(1, 100);
+        bankAccount.chargeManagementFees(1);
+        assertEquals(94.9, bankAccount.getBalance());
     }
 
     /**
