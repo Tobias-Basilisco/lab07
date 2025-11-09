@@ -72,6 +72,14 @@ class TestStrictBankAccount {
      */
     @Test
     public void testWithdrawingTooMuch() {
-        fail("To be implemented");
+        try {
+            bankAccount.withdraw(1, 10);
+            Assertions.fail("Withdraw grater than balance was possible, but should have thrown an exception");
+        } catch (IllegalArgumentException e){
+            assertEquals(0.0, bankAccount.getBalance());
+            assertNotNull(e.getMessage());
+            assertFalse(e.getMessage().isBlank());
+            assertTrue(e.getMessage().length() >= ACCEPTABLE_MESSAGE_LENGTH);
+        }
     }
 }
